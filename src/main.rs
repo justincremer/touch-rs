@@ -33,28 +33,27 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     match args.len() {
         0 | 1 => {
-            let _ = stderr.write(b"Please provide an argument");
+            let _ = stderr.write(b"Please provide an argument\n");
             exit(1);
         }
         _ => match args[1].as_str() {
             "-h" | "--help" => {
-                if let Err(e) = stdout.write(MAN_PAGE.as_bytes()) {
-                    let _ = stderr.write(format!("{}", e).as_bytes());
+                if let Err(e) = stdout.write(format!("{}\n", MAN_PAGE).as_bytes()) {
+                    let _ = stderr.write(format!("{}\n", e).as_bytes());
                     exit(1);
                 };
                 exit(0);
             }
             _ => {
-                // TODO: update date/time on touch
                 for arg in &args[1..] {
                     if Path::new(&arg).is_file() {
                         let time = FileTime::from_system_time(SystemTime::now());
                         if let Err(e) = set_file_times(&arg, time, time) {
-                            let _ = stderr.write(format!("{}", e).as_bytes());
+                            let _ = stderr.write(format!("{}\n", e).as_bytes());
                         }
                     } else {
                         if let Err(e) = File::create(&arg) {
-                            let _ = stderr.write(format!("{}", e).as_bytes());
+                            let _ = stderr.write(format!("{}\n", e).as_bytes());
                         }
                     }
                 }
