@@ -40,6 +40,7 @@ fn main() {
             "-h" | "--help" => {
                 if let Err(e) = stdout.write(MAN_PAGE.as_bytes()) {
                     let _ = stderr.write(format!("{}", e).as_bytes());
+                    exit(1);
                 };
                 exit(0);
             }
