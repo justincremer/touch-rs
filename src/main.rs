@@ -26,10 +26,6 @@ OPTIONS
 "#; /* @MANEND */
 
 fn main() {
-    // TODO: change use of stdio for compatibility with winapi
-    // (example 1): Err(e) => stderr.write(format!("some error {}", e).as_bytes()),
-    // (example 2): if let Err(e) = stdout.write(b"This is an example") { stderr.write(e.as_bytes()); };
-
     let stdout = stdout();
     let mut stdout = stdout.lock();
     let mut stderr = stderr();
